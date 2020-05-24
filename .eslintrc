@@ -5,7 +5,12 @@
     "jest": true
   },
   "plugins": ["react", "@typescript-eslint", "jest"],
-  "extends": ["airbnb", "plugin:react/recommended", "plugin:jest/recommended"],
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "prettier"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
