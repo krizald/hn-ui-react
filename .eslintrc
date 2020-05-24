@@ -38,12 +38,8 @@
         "tsx": "never"
       }
     ],
-    "implicit-arrow-linebreak": "off",
     "no-unused-vars": ["error", { "varsIgnorePattern": "I*" }],
-    "linebreak-style": ["error", "windows"],
-    "semi": "off",
-    "@typescript-eslint/semi": ["error"],
-    "function-paren-newline": "off"
+    "semi": "off"
   },
   "settings": {
     "import/resolver": {
