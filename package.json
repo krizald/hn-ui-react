@@ -21,7 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "jest": "jest --coverage",
+    "jest": "jest --coverage --verbose",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "eject": "react-scripts eject"
   },
