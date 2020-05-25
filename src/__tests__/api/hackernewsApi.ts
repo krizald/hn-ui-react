@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import HackerNewsApi from '../../api';
-import { IItem } from '../../model';
+import { Item } from '../../model';
 
 jest.mock('axios');
 
@@ -10,7 +10,7 @@ describe('Hacker News Api test suites', () => {
   });
 
   test('It should return a single item json', async () => {
-    const data: IItem = {
+    const data: Item = {
       by: 'farmer',
       id: 12,
       deleted: false,
@@ -22,7 +22,7 @@ describe('Hacker News Api test suites', () => {
       url: 'http://wired.com/wired/archive/14.10/cloudware.html',
     };
 
-    const mockResponse: AxiosResponse<IItem> = {
+    const mockResponse: AxiosResponse<Item> = {
       data,
       status: 200,
       statusText: 'OK',
