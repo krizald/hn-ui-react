@@ -17,8 +17,22 @@ test('pull single item', async () => {
     url: 'http://wired.com/wired/archive/14.10/cloudware.html',
   };
 
+  const mockResponse: AxiosResponse<IItem> = {
+    data,
+    status: 200,
+    statusText: 'OK',
+    config: {},
+    headers: {},
+  };
+  (axios.get as jest.Mock).mockImplementationOnce(() =>
+    Promise.resolve(mockResponse),
+  );
+
   const api = new HackerNewsApi();
   const response = await api.fetchItem(12);
-  expect(axios.get).toHaveBeenCalled();
   expect(response.data).toBe(data);
+  expect(axios.get).toHaveBeenCalledTimes(1);
+  expect(axios.get).toHaveBeenCalledWith(
+    'https://hacker-news.firebaseio.com/v0/item/12.json',
+  );
 });
