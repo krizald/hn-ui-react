@@ -7,6 +7,8 @@
   "plugins": ["react", "@typescript-eslint", "jest"],
   "extends": [
     "airbnb",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jest/recommended",
     "prettier"
@@ -38,7 +40,6 @@
         "tsx": "never"
       }
     ],
-    "no-unused-vars": ["error", { "varsIgnorePattern": "I*" }],
     "semi": "off"
   },
   "settings": {

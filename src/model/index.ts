@@ -1,1 +1,1 @@
-export * from './IItem';
+export * from './Item';
