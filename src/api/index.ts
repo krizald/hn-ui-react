@@ -1,1 +1,2 @@
-export { default } from './hackerNewsApi';
+// eslint-disable-next-line import/prefer-default-export
+export { default as HackerNewsApi } from './hackerNewsApi';

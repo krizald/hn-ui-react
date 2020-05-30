@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import HackerNewsApi from '../../api';
+import { HackerNewsApi } from '../../api';
 import { Item } from '../../model';
 
 jest.mock('axios');
