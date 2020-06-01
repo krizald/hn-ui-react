@@ -1,7 +1,6 @@
 import { HackerNewsApi } from '../api';
-import NumericDictionary from './numericDIctionary';
-import { Item } from '../model';
-import ItemModel from '../model/Item';
+import { NumericDictionary } from '.';
+import { Item, ItemModel } from '../model';
 
 export default class StoryStore {
   private static instance: StoryStore;

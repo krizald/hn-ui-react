@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @remove-on-eject-begin
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
