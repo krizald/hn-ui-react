@@ -13,18 +13,31 @@ const UnstyledTopStoryGrid: FC<TopStoryGriProps> = (props: TopStoryGriProps) => 
   const { StoryDataStore: store } = props;
   const [stories, setStories] = useState([] as ItemModel[]);
 
+  const refreshStories = (): void => {
+    store.PopulateTopStories().then(() => {
+      store.FetchItems(store.topStoryId).then(() => {
+        setStories(store.GetAllStories());
+      });
+    });
+  };
+
   const populateStoires = (): void => {
     if (stories.length === 0) {
-      store.PopulateTopStories().then(() => {
-        store.FetchItems(store.topStoryId).then((res) => {
-          setStories(res);
-        });
-      });
+      refreshStories();
     }
   };
+
   useEffect(populateStoires, []);
   return (
     <div className="ag-theme-balham" style={{ height: '800px', width: '100%' }}>
+      <button
+        type="button"
+        onClick={(): void => {
+          refreshStories();
+        }}
+      >
+        Clean
+      </button>
       <AgGridReact rowData={stories}>
         <AgGridColumn field="id" />
         <AgGridColumn field="type" />

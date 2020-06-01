@@ -5,7 +5,7 @@ import { Item, ItemModel } from '../model';
 export default class StoryStore {
   private static instance: StoryStore;
 
-  storyCache: NumericDictionary<Item>;
+  storyCache: NumericDictionary<ItemModel>;
 
   topStoryId: number[];
 
@@ -28,20 +28,33 @@ export default class StoryStore {
   }
 
   PopulateTopStories = async (): Promise<void> => {
-    if (this.topStoryId.length === 0) {
-      await this.api.fetchTopStories().then((response) => {
-        this.topStoryId = response.data.slice(0, 50);
-      });
-    }
+    const response = await this.api.fetchTopStories();
+    this.topStoryId = response.slice(0, 20);
   };
 
   FetchItems = async (ids: number[]): Promise<ItemModel[]> => {
-    return this.api
-      .fetchItems(ids)
-      .then((arr) => arr.map((res) => new ItemModel(res.data)));
+    const res: ItemModel[] = [];
+    const requestIds: number[] = [];
+    ids.forEach((id) => {
+      const item: ItemModel | undefined = this.storyCache[id];
+      if (item === undefined) {
+        requestIds.push(id);
+      } else {
+        res.push(item);
+      }
+    });
+    const arr = await this.api.fetchItems(requestIds);
+    arr.forEach((element) => {
+      if (element !== undefined) {
+        const item = new ItemModel(element);
+        res.push(item);
+        this.storyCache[item.id] = item;
+      }
+    });
+    return res;
   };
 
-  GetAllStories = (): Item[] => {
+  GetAllStories = (): ItemModel[] => {
     return Object.values(this.storyCache);
   };
 }
