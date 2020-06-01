@@ -1,3 +1,4 @@
-export interface NumericDictionary<T> {
-  [Key: number]: T;
+class NumericDictionary<T> {
+  [Key: string]: T;
 }
+export default NumericDictionary;
