@@ -208,7 +208,7 @@ describe('Hacker News Api test suites', () => {
     expect(data.length).toBe(3);
     expect(data).toContain(response[0]);
     expect(data).toContain(response[1]);
-    expect(undefined).toBe(response[2]);
+    expect(response[2]).toBeUndefined();
     expect(axios.get).toHaveBeenCalledTimes(4);
     expect(axios.get).toHaveBeenCalledWith(
       'https://hacker-news.firebaseio.com/v0/item/12.json',
