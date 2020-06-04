@@ -1,16 +1,18 @@
 import React, { FC, useState, useEffect } from 'react';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { StoryStore } from '../stores';
 import { ItemModel } from '../model';
 
-interface TopStoryGriProps {
+const styles = { gridcontainer: { height: '800px', width: '100%' } };
+interface TopStoryGriProps extends WithStyles<typeof styles> {
   StoryDataStore: StoryStore;
 }
 
 const UnstyledTopStoryGrid: FC<TopStoryGriProps> = (props: TopStoryGriProps) => {
-  const { StoryDataStore: store } = props;
+  const { StoryDataStore: store, classes } = props;
   const [stories, setStories] = useState([] as ItemModel[]);
 
   const refreshStories = (): void => {
@@ -29,7 +31,7 @@ const UnstyledTopStoryGrid: FC<TopStoryGriProps> = (props: TopStoryGriProps) => 
 
   useEffect(populateStoires, []);
   return (
-    <div className="ag-theme-balham" style={{ height: '800px', width: '100%' }}>
+    <div className={`ag-theme-alpine ${classes.gridcontainer}`}>
       <button
         type="button"
         onClick={(): void => {
@@ -49,4 +51,4 @@ const UnstyledTopStoryGrid: FC<TopStoryGriProps> = (props: TopStoryGriProps) => 
   );
 };
 
-export default UnstyledTopStoryGrid;
+export default withStyles(styles)(UnstyledTopStoryGrid);
