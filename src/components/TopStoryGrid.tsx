@@ -7,12 +7,11 @@ import { StoryStore } from '../stores';
 import { ItemModel } from '../model';
 
 const styles = { gridcontainer: { height: '800px', width: '100%' } };
-interface TopStoryGriProps extends WithStyles<typeof styles> {
-  StoryDataStore: StoryStore;
-}
+type TopStoryGriProps = WithStyles<typeof styles>;
 
 const UnstyledTopStoryGrid: FC<TopStoryGriProps> = (props: TopStoryGriProps) => {
-  const { StoryDataStore: store, classes } = props;
+  const { classes } = props;
+  const store = StoryStore.GetInstance();
   const [stories, setStories] = useState([] as ItemModel[]);
 
   const refreshStories = (): void => {
