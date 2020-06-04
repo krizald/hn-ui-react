@@ -29,20 +29,24 @@ export default class StoryStore {
 
   PopulateTopStories = async (): Promise<void> => {
     const response = await this.api.fetchTopStories();
-    this.topStoryId = response.slice(0, 20);
+    this.topStoryId = response;
   };
 
-  FetchItems = async (ids: number[]): Promise<ItemModel[]> => {
+  FetchItems = async (ids: number[], nocache = false): Promise<ItemModel[]> => {
     const res: ItemModel[] = [];
-    const requestIds: number[] = [];
-    ids.forEach((id) => {
-      const item: ItemModel | undefined = this.storyCache[id];
-      if (item === undefined) {
-        requestIds.push(id);
-      } else {
-        res.push(item);
-      }
-    });
+    let requestIds: number[] = [];
+    if (nocache) {
+      requestIds = ids;
+    } else {
+      ids.forEach((id) => {
+        const item: ItemModel | undefined = this.storyCache[id];
+        if (item === undefined) {
+          requestIds.push(id);
+        } else {
+          res.push(item);
+        }
+      });
+    }
     const arr = await this.api.fetchItems(requestIds);
     arr.forEach((element) => {
       if (element !== undefined) {
