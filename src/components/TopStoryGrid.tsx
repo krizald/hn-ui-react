@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect } from 'react';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import StoryStore from '../stores/storyStore';
-import ItemModel from '../model/Item';
+import { StoryStore } from '../stores';
+import { ItemModel } from '../model';
 
 interface TopStoryGriProps {
   StoryDataStore: StoryStore;

@@ -50,7 +50,7 @@ describe('Story Store test suites', () => {
   });
 
   test('fetch items which are already cached', async () => {
-    const testData: Item = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+    const testData: Item[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
     const mockFn = jest.fn().mockImplementationOnce(() => {
       return Promise.resolve([]);
     });

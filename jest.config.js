@@ -4,7 +4,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
-    '!src/**/index.js',
+    '!src/**/index.{js,ts}',
     '!src/**/I*.ts',
   ],
   setupFiles: ['react-app-polyfill/jsdom'],
