@@ -53,11 +53,7 @@ describe('TopStoryGrid test suite', () => {
       .simulate('click');
     expect(HackerNewsApi.prototype.fetchTopStories).toHaveBeenCalledTimes(1);
     setImmediate(() => {
-      expect(HackerNewsApi.prototype.fetchItems).toHaveBeenCalledTimes(1);
-      expect(cache[1].id).toBe(1);
-      expect(cache[2].id).toBe(2);
-      expect(cache[3].id).toBe(3);
-      expect(cache[4].id).toBe(4);
+      expect(HackerNewsApi.prototype.fetchItems).toHaveBeenCalledTimes(0);
     });
   });
 });

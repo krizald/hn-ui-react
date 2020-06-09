@@ -1,76 +1,62 @@
 import React, { FC, useState, useEffect } from 'react';
-import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { GridReadyEvent, ValueFormatterParams } from 'ag-grid-community';
-import moment from 'moment';
+import { Button } from '@material-ui/core';
 import { StoryStore } from '../stores';
-import { ItemModel } from '../model';
-import LinkCellRenderer from './LinkCellRenderer';
+import { LinkCellRenderer, ItemGrid, LoadingPanel, ItemCardRenderer } from '.';
 
-const styles = { gridcontainer: { height: '800px', width: '100%' } };
+const styles = {
+  gridcontainer: { height: '800px', width: '100%' },
+  refreshbutton: { margin: '5px' },
+};
 type TopStoryGriProps = WithStyles<typeof styles>;
 const gridOptions = {
-  columnDefs: [
-    { field: 'title', headerName: 'Title' },
-    {
-      field: 'url',
-      headerName: 'Link Url',
-      cellRenderer: 'linkCellRenderer',
-    },
-    {
-      field: 'createDate',
-      headerName: 'Date',
-      valueFormatter: (e: ValueFormatterParams): string => {
-        return moment(e.value as Date).format('MMM Do YYYY, hh:mm:ss');
-      },
-    },
-  ],
+  columnDefs: [{ headerName: 'Top Stories' }],
   frameworkComponents: {
     linkCellRenderer: LinkCellRenderer,
+    itemCardRenderer: ItemCardRenderer,
   },
   pagination: true,
   paginationAutoPageSize: true,
+  rowHeight: 100,
 };
 
 const UnstyledTopStoryGrid: FC<TopStoryGriProps> = (props: TopStoryGriProps) => {
   const { classes } = props;
   const store = StoryStore.GetInstance();
-  const [stories, setStories] = useState([] as ItemModel[]);
-
+  const [storyIds, setStoryIds] = useState([] as number[]);
+  const [isLoading, setIsLoadig] = useState(true);
   const refreshStories = (): void => {
-    store.PopulateTopStories().then(() => {
-      store.FetchItems(store.topStoryId).then(() => {
-        setStories(store.GetAllStories());
+    setIsLoadig(true);
+    store
+      .PopulateTopStories()
+      .then(() => {
+        setStoryIds(store.topStoryId);
+      })
+      .finally(() => {
+        setIsLoadig(false);
       });
-    });
   };
 
-  const populateStoires = (): void => {
-    if (stories.length === 0) {
-      refreshStories();
-    }
-  };
-
-  useEffect(populateStoires, []);
+  useEffect(refreshStories, storyIds);
   return (
     <div className={`ag-theme-alpine ${classes.gridcontainer}`}>
-      <button
-        type="button"
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.refreshbutton}
         onClick={(): void => {
           refreshStories();
         }}
       >
-        Clean
-      </button>
-      <AgGridReact
-        rowData={stories}
-        gridOptions={gridOptions}
-        onGridReady={(e: GridReadyEvent): void => {
-          e.api.sizeColumnsToFit();
-        }}
-      />
+        Refresh
+      </Button>
+      {isLoading ? (
+        <LoadingPanel />
+      ) : (
+        <ItemGrid gridOptions={gridOptions} itemId={storyIds} />
+      )}
     </div>
   );
 };
