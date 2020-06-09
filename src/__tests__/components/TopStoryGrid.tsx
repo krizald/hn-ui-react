@@ -18,14 +18,9 @@ describe('TopStoryGrid test suite', () => {
       return Promise.resolve(testData);
     });
 
-    const wrapper = shallow(<TopStoryGrid />);
+    const wrapper = render(<TopStoryGrid />);
 
-    // expect(
-    //   wrapper
-    //     .dive()
-    //     .find('button')
-    //     .text(),
-    // ).toBe('Refresh');
+    expect(wrapper.find('button').text()).toBe('Refresh');
   });
 
   test('should call store when clicked button', () => {
