@@ -16,7 +16,7 @@ const ItemGrid: FC<ItemGridProps> = (props: ItemGridProps) => {
   const [isLoading, setIsLoadig] = useState(true);
 
   const getItems = (): void => {
-    if (itemId.length > 0) {
+    if (itemId && itemId.length > 0) {
       setIsLoadig(true);
       store
         .FetchItems(itemId)

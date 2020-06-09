@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { ItemGrid } from '../../components';
+import ItemGrid from '../../components/ItemGrid';
 import { HackerNewsApi } from '../../api';
 import { StoryStore } from '../../stores';
 import { ItemModel } from '../../model';

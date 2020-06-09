@@ -20,7 +20,7 @@ export const UnstyledItemCardRenderer: FunctionComponent<ItemCardRendererProp> =
         <span className={classes.boldtext}>{data.title}</span>
       </Grid>
       <Grid item xs={2}>
-        <span className={classes.boldtext}>Issue Date</span>
+        <span className={classes.boldtext}>Last Updated</span>
       </Grid>
       <Grid item xs={1}>
         <span>{moment(data.createDate).format('MMM Do YYYY, hh:mm:ss')}</span>
