@@ -1,12 +1,11 @@
 import { shallow, render, mount, ReactWrapper } from 'enzyme';
 import React from 'react';
-import { act } from '@testing-library/react';
 import { HackerNewsApi } from '../../api';
 import TopStoryGrid from '../../components/TopStoryGrid';
 import { StoryStore } from '../../stores';
 import { ItemModel, Item } from '../../model';
 
-jest.mock('../../api');
+// jest.mock('../../api');
 
 describe('TopStoryGrid test suite', () => {
   beforeEach(() => {
