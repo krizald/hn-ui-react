@@ -4,8 +4,10 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
-    '!src/**/index.js',
+    '!src/**/index.{js,ts}',
     '!src/**/I*.ts',
+    '!src/serviceWorker.ts',
+    '!src/api/apiConfig.ts',
   ],
   setupFiles: ['react-app-polyfill/jsdom'],
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
