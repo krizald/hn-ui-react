@@ -3,7 +3,6 @@ import { AgGridReact } from 'ag-grid-react';
 import { GridReadyEvent, GridOptions } from 'ag-grid-community';
 import { StoryStore } from '../stores';
 import { ItemModel } from '../model';
-import LoadingPanel from './LoadingPanel';
 
 interface ItemGridProps {
   itemId: number[];
@@ -13,19 +12,15 @@ const ItemGrid: FC<ItemGridProps> = (props: ItemGridProps) => {
   const { itemId, gridOptions } = props;
   const store = StoryStore.GetInstance();
   const [items, setItems] = useState([] as ItemModel[]);
-  const [isLoading, setIsLoadig] = useState(true);
 
   const getItems = (): void => {
     if (itemId && itemId.length > 0) {
-      setIsLoadig(true);
       store
         .FetchItems(itemId)
         .then((res) => {
           setItems(res);
         })
-        .finally(() => {
-          setIsLoadig(false);
-        });
+        .finally(() => {});
     }
   };
 
@@ -34,9 +29,7 @@ const ItemGrid: FC<ItemGridProps> = (props: ItemGridProps) => {
   };
 
   useEffect(populateItems, [itemId]);
-  return isLoading ? (
-    <LoadingPanel />
-  ) : (
+  return (
     <AgGridReact
       rowData={items}
       gridOptions={gridOptions}

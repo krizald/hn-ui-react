@@ -2,12 +2,14 @@ import React, { FC, useState, useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Button, makeStyles } from '@material-ui/core';
+import LoadingOverlay from 'react-loading-overlay';
 import { StoryStore } from '../stores';
-import { LinkCellRenderer, ItemGrid, LoadingPanel, ItemCardRenderer } from '.';
+import { LinkCellRenderer, ItemGrid, ItemCardRenderer } from '.';
 
 const styles = makeStyles({
   gridcontainer: { height: '800px', width: '100%' },
   refreshbutton: { margin: '5px' },
+  fullHeight: { height: '100%' },
 });
 
 const gridOptions = {
@@ -53,12 +55,15 @@ const TopStoryGrid: FC = () => {
           Refresh
         </Button>
       </div>
-      <div style={{ height: '100%' }}>
-        {isLoading ? (
-          <LoadingPanel />
-        ) : (
+      <div className={classes.fullHeight}>
+        <LoadingOverlay
+          active={isLoading}
+          spinner
+          text="Loading..."
+          className={classes.fullHeight}
+        >
           <ItemGrid gridOptions={gridOptions} itemId={storyIds} />
-        )}
+        </LoadingOverlay>
       </div>
     </div>
   );
