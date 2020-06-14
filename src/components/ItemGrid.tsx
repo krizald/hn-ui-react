@@ -7,20 +7,29 @@ import { ItemModel } from '../model';
 interface ItemGridProps {
   itemId: number[];
   gridOptions?: GridOptions;
+  onLoading?: () => void;
+  onLoaded?: () => void;
 }
 const ItemGrid: FC<ItemGridProps> = (props: ItemGridProps) => {
-  const { itemId, gridOptions } = props;
+  const { itemId, gridOptions, onLoading, onLoaded } = props;
   const store = StoryStore.GetInstance();
   const [items, setItems] = useState([] as ItemModel[]);
 
   const getItems = (): void => {
     if (itemId && itemId.length > 0) {
+      if (onLoading) {
+        onLoading();
+      }
       store
         .FetchItems(itemId)
         .then((res) => {
           setItems(res);
         })
-        .finally(() => {});
+        .finally(() => {
+          if (onLoaded) {
+            onLoaded();
+          }
+        });
     }
   };
 

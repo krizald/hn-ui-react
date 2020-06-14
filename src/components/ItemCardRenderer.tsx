@@ -3,6 +3,7 @@ import { ICellRendererParams } from 'ag-grid-community';
 import moment from 'moment';
 import { Grid, makeStyles } from '@material-ui/core';
 import { ItemModel } from '../model';
+import Constants from '../constants';
 
 const useStyles = makeStyles({
   boldtext: { 'font-weight': 'bold', 'font-style': 'italic' },
@@ -16,14 +17,17 @@ export const UnstyledItemCardRenderer: FunctionComponent<ItemCardRendererProp> =
   const classes = useStyles();
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      <Grid item xs={11}>
         <span className={classes.boldtext}>{data.title}</span>
+      </Grid>
+      <Grid item xs={1}>
+        <a href={`/item/${data.id}`}>Details</a>
       </Grid>
       <Grid item xs={2}>
         <span className={classes.boldtext}>Last Updated</span>
       </Grid>
       <Grid item xs={1}>
-        <span>{moment(data.createDate).format('MMM Do YYYY, hh:mm:ss')}</span>
+        <span>{moment(data.createDate).format(Constants.dateTimeFormat)}</span>
       </Grid>
       <Grid item xs={2}>
         <span className={classes.boldtext}>Comments</span>
