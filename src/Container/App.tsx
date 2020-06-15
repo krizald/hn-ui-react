@@ -1,13 +1,18 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import UnstyledTopStoryGrid from '../components/TopStoryGrid';
-
+import TopStories from './TopStories';
+import ItemDetail from './ItemDetail';
+/* App component */
 function App(): React.ReactNode {
   return (
-    <div>
-      <h2 data-testid="app_top_label">Learn React</h2>
-      <UnstyledTopStoryGrid />
-    </div>
+    <Switch>
+      <div>
+        <h2 data-testid="app_top_label">Learn React</h2>
+        <Route exact path="/" component={TopStories} />
+        <Route path="/item/:id" component={ItemDetail} />
+      </div>
+    </Switch>
   );
 }
 

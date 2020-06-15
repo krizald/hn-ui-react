@@ -1,7 +1,7 @@
-import { shallow, render, mount, ReactWrapper } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 import { HackerNewsApi } from '../../api';
-import TopStoryGrid from '../../components/TopStoryGrid';
+import TopStoryGrid from '../../container/TopStories';
 import { StoryStore } from '../../stores';
 import { ItemModel, Item } from '../../model';
 
@@ -11,15 +11,17 @@ describe('TopStoryGrid test suite', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  test('should render a Clear button', () => {
+  test('should render a child ItemGrid', () => {
     const testData: ItemModel[] = [{ id: 1 }, { id: 2 }];
     StoryStore.prototype.FetchItems = jest.fn().mockImplementationOnce(() => {
       return Promise.resolve(testData);
     });
 
-    const wrapper = render(<TopStoryGrid />);
+    const wrapper = shallow(<TopStoryGrid />);
 
-    expect(wrapper.find('button').text()).toBe('Refresh');
+    expect(wrapper.find('WithStyles(ForwardRef(Button))').text()).toBe('Refresh');
+    expect(wrapper.find('LoadingOverlayWrapper').length).toBe(1);
+    expect(wrapper.find('ItemGrid').length).toBe(1);
   });
 
   test('should call store when clicked button', () => {
@@ -44,7 +46,8 @@ describe('TopStoryGrid test suite', () => {
     expect(cache[3]).toBeUndefined();
     expect(cache[4]).toBeUndefined();
 
-    const wrapper = shallow(<TopStoryGrid />);
+    // const wrapper = shallow(<TopStoryGrid />);
+
     // wrapper
     //   .dive()
     //   .find('button')
