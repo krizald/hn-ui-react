@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import TopStories from './TopStories';
 import ItemDetail from './ItemDetail';
-/* App component */
-function App(): React.ReactNode {
+
+const App: FC = () => {
   return (
     <Switch>
       <div>
@@ -14,6 +14,6 @@ function App(): React.ReactNode {
       </div>
     </Switch>
   );
-}
+};
 
 export default App;
