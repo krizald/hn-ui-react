@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { ICellRendererParams } from 'ag-grid-community';
 import moment from 'moment';
 import { Grid, makeStyles } from '@material-ui/core';
-import { ItemModel } from '../model';
+import { ItemModel } from '../models';
 import Constants from '../constants';
 
 const useStyles = makeStyles({

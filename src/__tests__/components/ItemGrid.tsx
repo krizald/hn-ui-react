@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import ItemGrid from '../../components/ItemGrid';
 import { HackerNewsApi } from '../../api';
 import { StoryStore } from '../../stores';
-import { ItemModel } from '../../model';
+import { ItemModel } from '../../models';
 
 jest.mock('../../api');
 
@@ -28,7 +28,7 @@ describe('ItemGrid test suite', () => {
     expect(HackerNewsApi.prototype.fetchItems).toHaveBeenCalledTimes(1);
   });
 
-  test('should render, store api called', () => {
+  test('should render, store api called', async () => {
     HackerNewsApi.prototype.fetchItems = jest.fn();
     let wrapper;
     StoryStore.GetInstance().FetchItems = jest
@@ -36,7 +36,7 @@ describe('ItemGrid test suite', () => {
       .mockImplementationOnce(() =>
         Promise.resolve([new ItemModel({ id: 1 })] as ItemModel[]),
       );
-    act(() => {
+    await act(() => {
       wrapper = mount(<ItemGrid itemId={[1, 2, 3, 4, 5]} />);
       wrapper.update();
     });

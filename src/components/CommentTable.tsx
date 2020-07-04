@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 import he from 'he';
-import { ItemModel } from '../model';
+import { ItemModel } from '../models';
 import { StoryStore } from '../stores';
 import Constants from '../constants';
 
@@ -42,7 +42,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
     }
   };
   useEffect(getComments);
-  return comments ? (
+  return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
@@ -53,7 +53,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {comments.map((row) => (
+          {(comments || ([] as ItemModel[])).map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 <Grid container spacing={3}>
@@ -88,7 +88,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
         </TableBody>
       </Table>
     </TableContainer>
-  ) : null;
+  );
 };
 
 export default CommentTable;

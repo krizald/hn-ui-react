@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { HackerNewsApi } from '../../api';
-import TopStoryGrid from '../../container/TopStories';
+import TopStoryGrid from '../../containers/TopStories';
 import { StoryStore } from '../../stores';
-import { ItemModel, Item } from '../../model';
+import { ItemModel, Item } from '../../models';
 
 // jest.mock('../../api');
 
