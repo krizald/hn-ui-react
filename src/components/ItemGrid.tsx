@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { GridReadyEvent, GridOptions } from 'ag-grid-community';
 import { StoryStore } from '../stores';
-import { ItemModel } from '../model';
+import { ItemModel } from '../models';
 
 interface ItemGridProps {
   itemId: number[];

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import apiConfig from './apiConfig';
-import { Item } from '../model';
+import { Item } from '../models';
 
 export default class HackerNewsApi {
   fetchItem = async (id: number): Promise<Item | undefined> => {

@@ -3,7 +3,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import CommentTable from '../../components/CommentTable';
 import { StoryStore } from '../../stores';
-import { ItemModel } from '../../model';
+import { ItemModel } from '../../models';
 
 describe('Comment table test suite', () => {
   beforeEach(() => {

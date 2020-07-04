@@ -1,6 +1,6 @@
 import { HackerNewsApi } from '../../api';
 import { StoryStore } from '../../stores';
-import { Item, ItemModel } from '../../model';
+import { Item, ItemModel } from '../../models';
 
 jest.mock('../../api');
 

@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import moment from 'moment';
 import { Grid, makeStyles } from '@material-ui/core';
 import { StoryStore } from '../stores';
-import { ItemModel } from '../model';
+import { ItemModel } from '../models';
 import { CommentTable } from '../components';
 import Constants from '../constants';
 
