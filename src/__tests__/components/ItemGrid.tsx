@@ -30,13 +30,14 @@ describe('ItemGrid test suite', () => {
 
   test('should render, store api called', () => {
     HackerNewsApi.prototype.fetchItems = jest.fn();
+    let wrapper;
     StoryStore.GetInstance().FetchItems = jest
       .fn()
       .mockImplementationOnce(() =>
         Promise.resolve([new ItemModel({ id: 1 })] as ItemModel[]),
       );
-    const wrapper = mount(<ItemGrid itemId={[1, 2, 3, 4, 5]} />);
     act(() => {
+      wrapper = mount(<ItemGrid itemId={[1, 2, 3, 4, 5]} />);
       wrapper.update();
     });
     expect(HackerNewsApi.prototype.fetchItems).toHaveBeenCalledTimes(0);

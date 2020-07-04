@@ -61,7 +61,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
                     <span className={classes.bold}>Author</span>
                   </Grid>
                   <Grid item xs={3}>
-                    <span>{row.by}</span>
+                    <span data-testid="comment-author">{row.by}</span>
                   </Grid>
                   <Grid item xs={3}>
                     <span className={classes.bold}>date time</span>
@@ -71,7 +71,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
                       {moment(row.createDate).format(Constants.dateTimeFormat)}
                     </span>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} data-testid="comment-text">
                     {React.createElement('div', {
                       dangerouslySetInnerHTML: {
                         __html: he.decode(row.text ? row.text : ''),
