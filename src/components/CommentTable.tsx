@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import {
   Grid,
   TableContainer,
@@ -13,11 +13,10 @@ import {
 import moment from 'moment';
 import he from 'he';
 import { ItemModel } from '../models';
-import { StoryStore } from '../stores';
 import Constants from '../constants';
 
 interface CommentTableProps {
-  data: number[];
+  data: ItemModel[];
 }
 
 const useStyles = makeStyles({
@@ -27,21 +26,7 @@ const useStyles = makeStyles({
 const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
   const classes = useStyles();
   const { data } = props;
-  const store = StoryStore.GetInstance();
-  const [comments, setComments] = useState<ItemModel[]>();
 
-  if (data.length === 0) {
-    setComments([]);
-  }
-
-  const getComments = (): void => {
-    if (comments === undefined) {
-      store.FetchItems(data).then((res) => {
-        setComments(res);
-      });
-    }
-  };
-  useEffect(getComments);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -53,7 +38,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(comments || ([] as ItemModel[])).map((row) => (
+          {(data || ([] as ItemModel[])).map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 <Grid container spacing={3}>
@@ -78,8 +63,8 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
                       },
                     })}
                   </Grid>
-                  {row.kids && row.kids.length > 0 ? (
-                    <CommentTable data={row.kids} />
+                  {row.kidsItems && row.kidsItems.length > 0 ? (
+                    <CommentTable data={row.kidsItems} />
                   ) : null}
                 </Grid>
               </TableCell>

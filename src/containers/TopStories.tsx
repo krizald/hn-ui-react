@@ -6,6 +6,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import { GridOptions } from 'ag-grid-community';
 import { StoryStore } from '../stores';
 import { LinkCellRenderer, ItemGrid, ItemCardRenderer } from '../components';
+import { ItemModel } from '../models';
 
 const styles = makeStyles({
   gridcontainer: { height: '800px', width: '100%' },
@@ -27,22 +28,21 @@ const gridOptions: GridOptions = {
 const TopStories: FC = () => {
   const classes = styles();
   const store = StoryStore.GetInstance();
-  const [storyIds, setStoryIds] = useState([] as number[]);
   const [isLoading, setIsLoadig] = useState(true);
-  const [isChildLoading, setIsChildLoading] = useState(false);
+  const [stories, setStories] = useState([] as ItemModel[]);
   const refreshStories = (): void => {
     setIsLoadig(true);
     store
       .PopulateTopStories()
-      .then(() => {
-        setStoryIds(store.topStoryId);
+      .then((res) => {
+        setStories(res);
       })
       .finally(() => {
         setIsLoadig(false);
       });
   };
 
-  useEffect(refreshStories, storyIds);
+  useEffect(refreshStories, stories);
   return (
     <div className={`ag-theme-alpine ${classes.gridcontainer}`}>
       <div>
@@ -59,21 +59,12 @@ const TopStories: FC = () => {
       </div>
       <div className={classes.fullHeight}>
         <LoadingOverlay
-          active={isLoading || isChildLoading}
+          active={isLoading}
           spinner
           text="Loading..."
           className={classes.fullHeight}
         >
-          <ItemGrid
-            gridOptions={gridOptions}
-            itemId={storyIds}
-            onLoaded={(): void => {
-              setIsChildLoading(false);
-            }}
-            onLoading={(): void => {
-              setIsChildLoading(true);
-            }}
-          />
+          <ItemGrid gridOptions={gridOptions} items={stories} />
         </LoadingOverlay>
       </div>
     </div>
