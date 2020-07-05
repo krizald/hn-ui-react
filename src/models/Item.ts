@@ -51,6 +51,8 @@ export default class ItemModel implements Item {
 
   public readonly createDate?: Date;
 
+  public kidsItems?: ItemModel[];
+
   constructor(fields: Item) {
     if (!fields.id) {
       throw new Error(`Error instantiating News Item, id is required: ${fields.id}`);
@@ -71,5 +73,6 @@ export default class ItemModel implements Item {
     this.url = fields.url;
     this.title = fields.title;
     this.createDate = this.time ? new Date(this.time * 1000) : undefined;
+    this.kidsItems = [];
   }
 }

@@ -25,7 +25,7 @@ const ItemDetail: FC<ItemDetailProps> = (props: ItemDetailProps) => {
   const classes = useStyles();
 
   const getItem = (): void => {
-    store.FetchItems([id], true).then((items) => {
+    store.FetchItemsWithKids([id], true).then((items) => {
       if (items.length === 0 || items[0] === undefined) {
         setItem({ id: 0 });
       } else {
@@ -61,7 +61,7 @@ const ItemDetail: FC<ItemDetailProps> = (props: ItemDetailProps) => {
           <span>{item.score}</span>
         </Grid>
       </Grid>
-      <CommentTable data={item.kids ? item.kids : []} />
+      <CommentTable data={item.kidsItems ? item.kidsItems : []} />
     </div>
   ) : null;
 };

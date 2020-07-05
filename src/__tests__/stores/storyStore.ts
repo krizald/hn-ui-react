@@ -11,14 +11,21 @@ describe('Story Store test suites', () => {
 
   test('fetch top stories id', async () => {
     const testData = [1, 2, 3, 4, 5, 6];
+    const testDataModel: Item[] = [{ id: 1 }];
     HackerNewsApi.prototype.fetchTopStories = jest
       .fn()
       .mockImplementationOnce(() => {
         return Promise.resolve(testData);
       });
+
+    HackerNewsApi.prototype.fetchItems = jest.fn().mockImplementationOnce(() => {
+      return Promise.resolve(testDataModel);
+    });
     const store = StoryStore.GetInstance();
-    await store.PopulateTopStories();
+    const stories = await store.PopulateTopStories();
     expect(store.topStoryId).toBe(testData);
+    expect(stories.length).toBe(1);
+    expect(stories[0].id).toBe(1);
   });
 
   test('fetch items', async () => {

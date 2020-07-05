@@ -27,9 +27,10 @@ export default class StoryStore {
     return StoryStore.instance;
   }
 
-  PopulateTopStories = async (): Promise<void> => {
+  PopulateTopStories = async (): Promise<ItemModel[]> => {
     const response = await this.api.fetchTopStories();
     this.topStoryId = response;
+    return this.FetchItems(this.topStoryId);
   };
 
   FetchItems = async (ids: number[], nocache = false): Promise<ItemModel[]> => {
@@ -60,5 +61,22 @@ export default class StoryStore {
 
   GetAllStories = (): ItemModel[] => {
     return Object.values(this.storyCache);
+  };
+
+  FetchItemsWithKids = async (
+    ids: number[],
+    nocache = false,
+  ): Promise<ItemModel[]> => {
+    if (ids.length === 0) return [] as ItemModel[];
+    const res = await this.FetchItems(ids, nocache);
+    await Promise.all(
+      res.map(async (item, i) => {
+        res[i].kidsItems = await this.FetchItemsWithKids(
+          item.kids ? item.kids : ([] as number[]),
+          nocache,
+        );
+      }),
+    );
+    return res;
   };
 }
