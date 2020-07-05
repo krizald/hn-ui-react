@@ -57,7 +57,11 @@ describe('Story Store test suites', () => {
     expect(cache[3]).toBe(res[2]);
     expect(cache[4]).toBe(res[3]);
     expect(mockFnFetchItem).toHaveBeenCalledTimes(5);
-    // expect(mockFnFetchItem).toHaveBeenCalledWith(1, 2, 3, 4, 5);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(1, 1);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(2, 2);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(3, 3);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(4, 4);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(5, 5);
   });
 
   test('FetchItems: should retrieve all items from cache', async () => {
@@ -104,6 +108,7 @@ describe('Story Store test suites', () => {
     cache[3] = new ItemModel(testData[2]);
     const res = await store.FetchItems([1, 2, 3, 4]);
     expect(mockFnFetchItem).toHaveBeenCalledTimes(1);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(1, 4);
     expect(res.length).toBe(4);
     expect(res[0].id).toBe(1);
     expect(res[1].id).toBe(2);
@@ -154,7 +159,10 @@ describe('Story Store test suites', () => {
     cache[4] = new ItemModel(testData[3]);
     const res = await store.FetchItems([1, 2, 3, 4], true);
     expect(mockFnFetchItem).toHaveBeenCalledTimes(4);
-    // expect(mockFnFetchItem).toHaveBeenCalledWith([1, 2, 3, 4]);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(1, 1);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(2, 2);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(3, 3);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(4, 4);
     expect(res.length).toBe(4);
     expect(res[0].id).toBe(1);
     expect(res[1].id).toBe(2);
@@ -166,7 +174,7 @@ describe('Story Store test suites', () => {
     expect(cache[4]).toBe(res[3]);
   });
 
-  test('fetch items with some undefined', async () => {
+  test('FetchItems: should retrieve item list without undefined', async () => {
     const testData: Item[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
     const mockFnFetchItem = jest.fn().mockImplementation((i: number) => {
       if (i <= testData.length && i >= 0) return Promise.resolve(testData[i - 1]);
@@ -193,7 +201,11 @@ describe('Story Store test suites', () => {
     expect(cache[4]).toBe(res[3]);
     expect(cache[5]).toBeUndefined();
     expect(mockFnFetchItem).toHaveBeenCalledTimes(5);
-    // expect(mockFn).toHaveBeenCalledWith([1, 2, 3, 4]);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(1, 1);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(2, 2);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(3, 3);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(4, 4);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(5, 5);
   });
 
   test('FetchItemsWithKids: should retrieve item with kids', async () => {
@@ -213,11 +225,13 @@ describe('Story Store test suites', () => {
     const store = StoryStore.GetInstance();
     store.itemCache = {};
     const cache = store.itemCache;
-    cache[1] = new ItemModel(testData[0]);
-    cache[2] = new ItemModel(testData[1]);
-    cache[3] = new ItemModel(testData[2]);
     const res = await store.FetchItemsWithKids([1, 2]);
-    expect(mockFnFetchItem).toHaveBeenCalledTimes(2);
+    expect(mockFnFetchItem).toHaveBeenCalledTimes(5);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(1, 1);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(2, 2);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(3, 3);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(4, 4);
+    expect(mockFnFetchItem).toHaveBeenNthCalledWith(5, 5);
     expect(res.length).toBe(2);
     expect(res[0].id).toBe(1);
     expect(res[1].id).toBe(2);
