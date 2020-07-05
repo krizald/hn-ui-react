@@ -16,9 +16,9 @@ export default class HackerNewsApi {
     return undefined;
   };
 
-  fetchItems = async (ids: number[]): Promise<(Item | undefined)[]> => {
-    return Promise.all(ids.map((id) => this.fetchItem(id)));
-  };
+  // fetchItems = async (ids: number[]): Promise<(Item | undefined)[]> => {
+  //   return Promise.all(ids.map((id) => this.fetchItem(id)));
+  // };
 
   fetchTopStories = async (): Promise<number[]> => {
     const res = await axios.get<number[]>(

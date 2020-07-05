@@ -1,23 +1,17 @@
 import { HackerNewsApi } from '../api';
 import { NumericDictionary } from '.';
-import { Item, ItemModel } from '../models';
+import { ItemModel } from '../models';
 
 export default class StoryStore {
   private static instance: StoryStore;
 
-  storyCache: NumericDictionary<ItemModel>;
+  itemCache: NumericDictionary<ItemModel>;
 
-  topStoryId: number[];
-
-  api: HackerNewsApi;
-
-  topStories: Item[];
+  private api: HackerNewsApi;
 
   private constructor() {
-    this.storyCache = {};
+    this.itemCache = {};
     this.api = new HackerNewsApi();
-    this.topStoryId = [];
-    this.topStories = [];
   }
 
   public static GetInstance(): StoryStore {
@@ -29,8 +23,7 @@ export default class StoryStore {
 
   PopulateTopStories = async (): Promise<ItemModel[]> => {
     const response = await this.api.fetchTopStories();
-    this.topStoryId = response;
-    return this.FetchItems(this.topStoryId);
+    return this.FetchItems(response);
   };
 
   FetchItems = async (ids: number[], nocache = false): Promise<ItemModel[]> => {
@@ -40,27 +33,29 @@ export default class StoryStore {
       requestIds = ids;
     } else {
       ids.forEach((id) => {
-        const item: ItemModel | undefined = this.storyCache[id];
-        if (item === undefined) {
+        if (this.itemCache[id] === undefined) {
           requestIds.push(id);
-        } else {
-          res.push(item);
         }
       });
     }
-    const arr = await this.api.fetchItems(requestIds);
-    arr.forEach((element) => {
-      if (element !== undefined) {
-        const item = new ItemModel(element);
-        res.push(item);
-        this.storyCache[item.id] = item;
+    await Promise.all(
+      requestIds.map(async (id) => {
+        const i = await this.api.fetchItem(id);
+        if (i) {
+          this.itemCache[i.id] = new ItemModel(i);
+        }
+      }),
+    );
+    ids.forEach((element) => {
+      if (element !== undefined && this.itemCache[element]) {
+        res.push(this.itemCache[element]);
       }
     });
     return res;
   };
 
   GetAllStories = (): ItemModel[] => {
-    return Object.values(this.storyCache);
+    return Object.values(this.itemCache);
   };
 
   FetchItemsWithKids = async (
