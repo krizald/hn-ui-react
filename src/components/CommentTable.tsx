@@ -38,7 +38,7 @@ const CommentTable: FC<CommentTableProps> = (props: CommentTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(data || ([] as ItemModel[])).map((row) => (
+          {data.map((row) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 <Grid container spacing={3}>
