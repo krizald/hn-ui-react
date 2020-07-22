@@ -9,15 +9,16 @@ interface ItemGridProps {
 }
 const ItemGrid: FC<ItemGridProps> = (props: ItemGridProps) => {
   const { items, gridOptions } = props;
-
+  const onGridReady = (e: GridReadyEvent): void => {
+    e.api.sizeColumnsToFit();
+  };
+  const isFullWidthCell = (): boolean => true;
   return (
     <AgGridReact
       rowData={items}
       gridOptions={gridOptions}
-      onGridReady={(e: GridReadyEvent): void => {
-        e.api.sizeColumnsToFit();
-      }}
-      isFullWidthCell={(): boolean => true}
+      onGridReady={onGridReady}
+      isFullWidthCell={isFullWidthCell}
       fullWidthCellRenderer="itemCardRenderer"
     />
   );
