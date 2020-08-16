@@ -61,7 +61,10 @@ const ItemDetail: FC<ItemDetailProps> = (props: ItemDetailProps) => {
           <span>{item.score}</span>
         </Grid>
       </Grid>
-      <CommentTable data={item.kidsItems ? item.kidsItems : []} />
+      <CommentTable
+        data={item.kidsItems ? item.kidsItems : []}
+        incident={Constants.initIncident}
+      />
     </div>
   ) : null;
 };

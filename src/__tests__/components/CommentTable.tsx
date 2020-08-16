@@ -9,7 +9,7 @@ describe('Comment Table test suite', () => {
   });
 
   test('Render: no item rendered', () => {
-    const wrapper = render(<CommentTable data={[]} />);
+    const wrapper = render(<CommentTable data={[]} incident={0} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -17,7 +17,7 @@ describe('Comment Table test suite', () => {
     const testData: ItemModel[] = [
       { id: 1, text: 'text1', createDate: new Date(2010, 1, 1), by: 'testuser1' },
     ];
-    const wrapper = render(<CommentTable data={testData} />);
+    const wrapper = render(<CommentTable data={testData} incident={0} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -27,7 +27,7 @@ describe('Comment Table test suite', () => {
       { id: 2, text: 'text2', createDate: new Date(2010, 1, 2), by: 'testuser2' },
       { id: 3, text: undefined, createDate: new Date(2010, 1, 3), by: 'testuser3' },
     ];
-    const wrapper = render(<CommentTable data={testData} />);
+    const wrapper = render(<CommentTable data={testData} incident={0} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -56,7 +56,7 @@ describe('Comment Table test suite', () => {
         ],
       },
     ];
-    const wrapper = render(<CommentTable data={testData} />);
+    const wrapper = render(<CommentTable data={testData} incident={0} />);
     expect(wrapper).toMatchSnapshot();
   });
 });
