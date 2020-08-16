@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import { Grid, makeStyles, Table, TableCell, TableRow } from '@material-ui/core';
 import he from 'he';
-import { TableRow, TableCell, Grid, makeStyles, Table } from '@material-ui/core';
 import moment from 'moment';
-import { ItemModel } from '../models';
+import React, { FC } from 'react';
 import Constants from '../constants';
+import { ItemModel } from '../models';
 
 interface CommentRowProps {
   data: ItemModel;

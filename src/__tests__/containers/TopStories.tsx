@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import TopStoryGrid from '../../containers/TopStories';
-import { StoryStore } from '../../stores';
 import { ItemModel } from '../../models';
+import { StoryStore } from '../../stores';
 
 describe('TopStoryGrid test suite', () => {
   beforeEach(() => {
@@ -37,19 +37,23 @@ describe('TopStoryGrid test suite', () => {
   //   // expect(mockFn).toHaveBeenCalledTimes(1);
   // });
 
-  test('Render Hook', () => {
-    const useEffect = jest.spyOn(React, 'useEffect').mockImplementation((f) => f());
-    const testData: ItemModel[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
-    const mockFn = jest.fn().mockImplementation(() => {
-      return Promise.resolve(testData);
-    });
-    StoryStore.prototype.PopulateTopStories = mockFn;
+  // test('Render Hook', () => {
+  //   const mockFn = jest.fn().mockImplementation(() => {
+  //     return Promise.resolve(testData);
+  //   });
+  //   const useEffect = jest.spyOn(React, 'useEffect').mockImplementation((f) => {
+  //     console.log(f.toString());
+  //     f();
+  //   });
+  //   const testData: ItemModel[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
-    const store = StoryStore.GetInstance();
-    store.PopulateTopStories = mockFn;
-    const wrapper = shallow(<TopStoryGrid />);
+  //   StoryStore.prototype.PopulateTopStories = mockFn;
 
-    expect(mockFn).toHaveBeenCalledTimes(1);
-    expect(useEffect).toHaveBeenCalledTimes(2);
-  });
+  //   const store = StoryStore.GetInstance();
+  //   store.PopulateTopStories = mockFn;
+  //   const wrapper = shallow(<TopStoryGrid />);
+
+  //   expect(mockFn).toHaveBeenCalledTimes(1);
+  //   expect(useEffect).toHaveBeenCalledTimes(2);
+  // });
 });
