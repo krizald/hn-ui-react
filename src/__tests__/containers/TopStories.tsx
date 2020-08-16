@@ -21,20 +21,35 @@ describe('TopStoryGrid test suite', () => {
     expect(wrapper.find('ItemGrid').length).toBe(1);
   });
 
-  test('should call store when clicked button', () => {
+  // test('should call store when clicked button', () => {
+  //   const testData: ItemModel[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+  //   const mockFn = jest.fn().mockImplementationOnce(() => {
+  //     return Promise.resolve(testData);
+  //   });
+  //   StoryStore.prototype.PopulateTopStories = mockFn;
+
+  //   const store = StoryStore.GetInstance();
+  //   // const cache = store.itemCache;
+  //   // expect(cache[1]).toBeUndefined();
+  //   // expect(cache[2]).toBeUndefined();
+  //   // expect(cache[3]).toBeUndefined();
+  //   // expect(cache[4]).toBeUndefined();
+  //   // expect(mockFn).toHaveBeenCalledTimes(1);
+  // });
+
+  test('Render Hook', () => {
+    const useEffect = jest.spyOn(React, 'useEffect').mockImplementation((f) => f());
     const testData: ItemModel[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
-    const mockFn = jest.fn().mockImplementationOnce(() => {
+    const mockFn = jest.fn().mockImplementation(() => {
       return Promise.resolve(testData);
     });
     StoryStore.prototype.PopulateTopStories = mockFn;
 
     const store = StoryStore.GetInstance();
-    store.itemCache = {};
-    const cache = store.itemCache;
-    expect(cache[1]).toBeUndefined();
-    expect(cache[2]).toBeUndefined();
-    expect(cache[3]).toBeUndefined();
-    expect(cache[4]).toBeUndefined();
-    // expect(mockFn).toHaveBeenCalledTimes(1);
+    store.PopulateTopStories = mockFn;
+    const wrapper = shallow(<TopStoryGrid />);
+
+    expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(useEffect).toHaveBeenCalledTimes(2);
   });
 });
